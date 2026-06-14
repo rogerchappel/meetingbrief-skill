@@ -1,0 +1,23 @@
+{
+  "title": "Product launch sync",
+  "date": "2026-06-20",
+  "attendees": [
+    "Avery - PM",
+    "Morgan - Eng",
+    "Riley - GTM"
+  ],
+  "goals": [
+    "confirm launch blockers",
+    "assign demo prep"
+  ],
+  "notes": [
+    "API docs still need examples",
+    "demo recording due Friday"
+  ],
+  "questions": [
+    "Who owns launch checklist?"
+  ],
+  "recentDecisions": [
+    "Ship beta docs first"
+  ]
+}
