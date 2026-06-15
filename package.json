@@ -19,5 +19,21 @@
     "local-first"
   ],
   "author": "Roger Chappel",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogerchappel/meetingbrief-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rogerchappel/meetingbrief-skill/issues"
+  },
+  "homepage": "https://github.com/rogerchappel/meetingbrief-skill#readme",
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ]
 }
