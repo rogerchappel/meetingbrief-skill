@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Exposed `buildMeetingBrief` from the package root for ESM consumers.
+- Expanded release verification to install and exercise the packed library and CLI.
+
 ## 0.1.0
 
 - Initial local-first meeting preparation brief generator for agents.
