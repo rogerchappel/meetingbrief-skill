@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "Local-first meeting preparation brief generator for agents.",
   "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
   "bin": {
     "meetingbrief-skill": "bin/meetingbrief-skill.js"
   },
