@@ -24,7 +24,19 @@ The CLI reads meeting bundle JSON and prints a meeting prep brief. It never call
 
 ## Library
 
-Import from `src/index.js` for tests or agent wrappers. The public functions are intentionally small so other agents can inspect and adapt the behavior.
+Install the package and import its public API from the package root:
+
+```js
+import { buildMeetingBrief } from 'meetingbrief-skill';
+
+const brief = buildMeetingBrief({
+  title: 'Product sync',
+  attendees: ['Avery', 'Morgan'],
+  goals: ['Choose the next release candidate'],
+});
+```
+
+The public functions are intentionally small so other agents can inspect and adapt the behavior.
 
 ## Safety Notes
 
