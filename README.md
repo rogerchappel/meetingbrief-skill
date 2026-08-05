@@ -22,6 +22,11 @@ node bin/meetingbrief-skill.js fixtures/product-sync.json --format json
 
 The CLI reads meeting bundle JSON and prints a meeting prep brief. It never calls external services, writes to third-party systems, or reads credentials.
 
+Exactly one local JSON file is required. `--format` is optional, may appear once, and accepts
+`markdown` (the default) or `json`. Unknown options, extra input files, missing option values,
+and JSON roots other than an object are rejected with a concise stderr diagnostic and nonzero
+exit status. Use `--help` or `--version` on its own for command information.
+
 ## Library
 
 Install the package and import its public API from the package root:
