@@ -18,6 +18,37 @@ test('meetingbrief-skill produces stable fixture output', () => {
 
   const sparse = buildMeetingBrief(load('sparse-meeting.json'));
   assert.ok(sparse.risks.includes('Meeting goals are missing or vague.'));
+
+  const normalized = buildMeetingBrief(load('malformed-meeting.json'));
+  assert.deepEqual(normalized.attendees, ['unknown']);
+});
+
+test('library normalizes documented optional and list values', () => {
+  const brief = buildMeetingBrief({
+    title: '  Planning  ',
+    date: null,
+    attendees: '  Avery  ',
+    goals: [' Decide ', '', '  '],
+    notes: null,
+  });
+  assert.equal(brief.title, 'Planning');
+  assert.equal(brief.date, 'unscheduled');
+  assert.deepEqual(brief.attendees, ['Avery']);
+  assert.deepEqual(brief.goals, ['Decide']);
+  assert.deepEqual(brief.context, []);
+});
+
+test('library rejects malformed scalar fields and list members', () => {
+  const cases = [
+    [{ title: { text: 'Sync' } }, /title must be a string/],
+    [{ date: 20260810 }, /date must be a string/],
+    [{ attendees: { name: 'Avery' } }, /attendees must be a string or an array of strings/],
+    [{ goals: ['Decide', { text: 'Ship' }] }, /goals must contain only strings/],
+    [{ notes: ['Context', false] }, /notes must contain only strings/],
+  ];
+  for (const [input, message] of cases) {
+    assert.throws(() => buildMeetingBrief(input), message);
+  }
 });
 
 test('CLI renders documented markdown and JSON formats', () => {
@@ -62,5 +93,22 @@ test('CLI rejects null and non-object JSON roots without a stack trace', () => {
     }
   } finally {
     for (const file of temporaryFiles) fs.rmSync(file);
+  }
+});
+
+test('CLI rejects malformed meeting fields concisely without rendering object values', () => {
+  const file = path.join(process.cwd(), `.cli-invalid-fields-${process.pid}.json`);
+  fs.writeFileSync(file, JSON.stringify({
+    title: { text: 'Sync' },
+    goals: ['Decide', { text: 'Ship' }],
+  }));
+  try {
+    const result = runCli(file);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /invalid meeting bundle: title must be a string/);
+    assert.doesNotMatch(result.stderr, /\n\s+at |\[object Object\]/);
+    assert.equal(result.stdout, '');
+  } finally {
+    fs.rmSync(file);
   }
 });
