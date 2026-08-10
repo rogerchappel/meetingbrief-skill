@@ -6,7 +6,9 @@ Use this skill when an agent needs to turns a meeting context bundle into a conc
 
 ## Required Inputs
 
-- A JSON file matching one of the documented fixture shapes.
+- A JSON object whose optional `title` and `date` are strings. Optional `attendees`, `goals`,
+  `notes`, `questions`, and `recentDecisions` are string arrays or single strings. `null` means
+  omitted; empty list strings are discarded. Other values are rejected.
 - A requested output format: `markdown` or `json`.
 
 ## Side-Effect Boundaries

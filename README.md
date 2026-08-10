@@ -43,6 +43,15 @@ const brief = buildMeetingBrief({
 
 The public functions are intentionally small so other agents can inspect and adapt the behavior.
 
+### Meeting bundle fields
+
+`title` and `date` are optional strings; omitted, `null`, or empty values use `Untitled meeting`
+and `unscheduled`. `attendees`, `goals`, `notes`, `questions`, and `recentDecisions` are optional
+string arrays. For convenience, each list field also accepts one string as a one-item list. Empty
+strings are removed after trimming. Other scalar types, object members, and mixed-type arrays are
+invalid. `buildMeetingBrief` throws a `TypeError` for invalid bundles, while the CLI prints one
+concise diagnostic to stderr and exits nonzero.
+
 ## Safety Notes
 
 - Local file input only.
