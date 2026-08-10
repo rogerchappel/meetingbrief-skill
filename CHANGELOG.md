@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Validate meeting bundle scalar and list fields instead of stringifying invalid values.
+- Report invalid meeting bundles as concise, nonzero CLI failures.
 - Exposed `buildMeetingBrief` from the package root for ESM consumers.
 - Expanded release verification to install and exercise the packed library and CLI.
 
