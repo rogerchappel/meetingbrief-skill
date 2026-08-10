@@ -60,5 +60,7 @@ if (input === null || Array.isArray(input) || typeof input !== 'object') {
   console.error('Error: input JSON root must be an object.');
   process.exit(1);
 }
-const result = buildMeetingBrief(input);
+let result;
+try { result = buildMeetingBrief(input); }
+catch (error) { console.error('Error: invalid meeting bundle: ' + error.message); process.exit(1); }
 console.log(format === 'json' ? JSON.stringify(result, null, 2) : renderMarkdown(result));
