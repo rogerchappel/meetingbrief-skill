@@ -4,6 +4,11 @@ Local-first meeting preparation brief generator for agents.
 
 Meetingbrief Skill is a local-first agent skill package that turns a meeting context bundle into a concise prep brief, agenda, risk checklist, and follow-up draft. It is designed for dry-run agent workflows where inputs are explicit files and outputs are reviewable artifacts.
 
+## Requirements
+
+Node.js 18.19.0 or newer is supported. CI exercises both the minimum supported version and
+Node.js 22, the current release runtime.
+
 ## Quickstart
 
 ```bash

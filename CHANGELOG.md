@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Support Node.js 18.19.0 and newer across the installed CLI and release checks.
 - Validate meeting bundle scalar and list fields instead of stringifying invalid values.
 - Report invalid meeting bundles as concise, nonzero CLI failures.
 - Exposed `buildMeetingBrief` from the package root for ESM consumers.
