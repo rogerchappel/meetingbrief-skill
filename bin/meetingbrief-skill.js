@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
-import pkg from '../package.json' with { type: 'json' };
 import { buildMeetingBrief } from '../src/index.js';
 import { renderMarkdown } from '../src/render.js';
+
+const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 
 const usage = 'Usage: meetingbrief-skill <input.json> [--format markdown|json]';
 const args = process.argv.slice(2);
