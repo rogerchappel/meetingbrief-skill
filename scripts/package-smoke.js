@@ -13,6 +13,9 @@ try {
   const [{ filename }] = JSON.parse(packOutput);
   const archive = path.join(temporaryDirectory, filename);
   const consumer = path.join(temporaryDirectory, 'consumer');
+  const packageMetadata = JSON.parse(
+    fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
+  );
 
   fs.mkdirSync(consumer);
   fs.writeFileSync(path.join(consumer, 'package.json'), '{"private":true,"type":"module"}\n');
@@ -32,7 +35,14 @@ try {
   const executable = process.platform === 'win32'
     ? path.join(consumer, 'node_modules', '.bin', 'meetingbrief-skill.cmd')
     : path.join(consumer, 'node_modules', '.bin', 'meetingbrief-skill');
-  assert.equal(execFileSync(executable, ['--version'], { encoding: 'utf8' }).trim(), '0.1.0');
+  const installedMetadata = JSON.parse(
+    fs.readFileSync(path.join(consumer, 'node_modules', 'meetingbrief-skill', 'package.json'), 'utf8'),
+  );
+  assert.equal(installedMetadata.version, packageMetadata.version);
+  assert.equal(
+    execFileSync(executable, ['--version'], { encoding: 'utf8' }).trim(),
+    installedMetadata.version,
+  );
 
   console.log('meetingbrief-skill package smoke passed');
 } finally {
