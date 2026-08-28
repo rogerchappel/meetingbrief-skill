@@ -14,6 +14,10 @@ function asList(value, field) {
   return items.map((item) => item.trim()).filter(Boolean);
 }
 
+function asSentence(value) {
+  return /[.!?]$/.test(value) ? value : value + '.';
+}
+
 function buildMeetingBrief(input) {
   if (input === null || Array.isArray(input) || typeof input !== 'object') {
     throw new TypeError('input must be an object.');
@@ -30,7 +34,7 @@ function buildMeetingBrief(input) {
   if (!goals.length) risks.push('Meeting goals are missing or vague.');
   if (questions.length) risks.push('Open questions need owners before the meeting ends.');
   const agenda = [goals.length ? 'Confirm goals and desired decisions.' : 'Clarify the desired outcome.', notes.length ? 'Review relevant context notes.' : 'Collect missing context.', questions.length ? 'Assign owners for open questions.' : 'Capture new questions and decisions.', 'Close with explicit follow-up actions.'];
-  return { title, date, attendees, goals, context: notes, recentDecisions: decisions, agenda, risks, followUpDraft: ['Thanks for the time today.', goals.length ? 'Confirmed goals: ' + goals.join('; ') + '.' : 'We clarified the intended outcome.', questions.length ? 'Open questions: ' + questions.join('; ') + '.' : 'No open questions were captured in the input.', 'Next steps should be assigned with owners and dates before sending.'] };
+  return { title, date, attendees, goals, context: notes, recentDecisions: decisions, agenda, risks, followUpDraft: ['Thanks for the time today.', goals.length ? asSentence('Confirmed goals: ' + goals.join('; ')) : 'We clarified the intended outcome.', questions.length ? asSentence('Open questions: ' + questions.join('; ')) : 'No open questions were captured in the input.', 'Next steps should be assigned with owners and dates before sending.'] };
 }
 
 export { buildMeetingBrief };
