@@ -38,6 +38,26 @@ test('library normalizes documented optional and list values', () => {
   assert.deepEqual(brief.context, []);
 });
 
+test('follow-up draft adds sentence punctuation only when needed', () => {
+  const punctuated = buildMeetingBrief({
+    goals: ['Decide now!'],
+    questions: ['Who owns this?'],
+  });
+  assert.deepEqual(punctuated.followUpDraft.slice(1, 3), [
+    'Confirmed goals: Decide now!',
+    'Open questions: Who owns this?',
+  ]);
+
+  const unpunctuated = buildMeetingBrief({
+    goals: ['Decide now'],
+    questions: ['Confirm the owner'],
+  });
+  assert.deepEqual(unpunctuated.followUpDraft.slice(1, 3), [
+    'Confirmed goals: Decide now.',
+    'Open questions: Confirm the owner.',
+  ]);
+});
+
 test('library rejects malformed scalar fields and list members', () => {
   const cases = [
     [{ title: { text: 'Sync' } }, /title must be a string/],
@@ -58,7 +78,10 @@ test('CLI renders documented markdown and JSON formats', () => {
 
   const json = runCli('fixtures/product-sync.json', '--format', 'json');
   assert.equal(json.status, 0);
-  assert.equal(JSON.parse(json.stdout).title, 'Product launch sync');
+  const parsed = JSON.parse(json.stdout);
+  assert.equal(parsed.title, 'Product launch sync');
+  assert.ok(parsed.followUpDraft.includes('Open questions: Who owns launch checklist?'));
+  assert.doesNotMatch(json.stdout, /[!?]\./);
 });
 
 test('CLI rejects invalid argument combinations', () => {
