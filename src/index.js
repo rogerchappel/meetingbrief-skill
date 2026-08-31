@@ -15,7 +15,8 @@ function asList(value, field) {
 }
 
 function asSentence(value) {
-  return /[.!?]$/.test(value) ? value : value + '.';
+  const closingDelimiter = String.raw`(?:["'’”\]\)}]|\s+\([^()]*\)|\s+\[[^\[\]]*\]|\s+\{[^{}]*\})`;
+  return new RegExp(String.raw`[.!?]${closingDelimiter}*$`).test(value) ? value : value + '.';
 }
 
 function buildMeetingBrief(input) {
