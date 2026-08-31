@@ -57,8 +57,9 @@ strings are removed after trimming. Other scalar types, object members, and mixe
 invalid. `buildMeetingBrief` throws a `TypeError` for invalid bundles, while the CLI prints one
 concise diagnostic to stderr and exits nonzero.
 
-Follow-up draft goal and question summaries preserve a final `.`, `!`, or `?`; summaries without
-sentence-ending punctuation receive a final period.
+Follow-up draft goal and question summaries preserve a final `.`, `!`, or `?`, including punctuation
+before ordinary closing quotes, brackets, or parentheses. Summaries without sentence-ending
+punctuation receive a final period.
 
 ## Safety Notes
 
