@@ -23,6 +23,26 @@ test('meetingbrief-skill produces stable fixture output', () => {
   assert.deepEqual(normalized.attendees, ['unknown']);
 });
 
+test('follow-up summaries preserve punctuation before closing delimiters', () => {
+  const brief = buildMeetingBrief({
+    goals: ['Choose "Option A?"'],
+    questions: ['Who owns it? (Avery)'],
+  });
+
+  assert.equal(brief.followUpDraft[1], 'Confirmed goals: Choose "Option A?"');
+  assert.equal(brief.followUpDraft[2], 'Open questions: Who owns it? (Avery)');
+});
+
+test('CLI markdown preserves quoted and parenthesized sentence endings', () => {
+  const result = runCli('fixtures/closing-delimiters.json', '--format', 'markdown');
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Confirmed goals: Choose "Option A\?"/);
+  assert.match(result.stdout, /Open questions: Who owns it\? \(Avery\)/);
+  assert.doesNotMatch(result.stdout, /\?"\./);
+  assert.doesNotMatch(result.stdout, /\(Avery\)\./);
+});
+
 test('library normalizes documented optional and list values', () => {
   const brief = buildMeetingBrief({
     title: '  Planning  ',
