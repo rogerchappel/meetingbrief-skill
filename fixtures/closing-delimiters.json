@@ -1,0 +1,5 @@
+{
+  "title": "Delimiter regression",
+  "goals": ["Choose \"Option A?\""],
+  "questions": ["Who owns it? (Avery)"]
+}
